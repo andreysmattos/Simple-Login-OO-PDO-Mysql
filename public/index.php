@@ -1,11 +1,12 @@
 <?php
 require_once "../vendor/autoload.php";
 use App\Conn\Conn;
+use App\Classes\Client;
+
+$cliente = new Client("andreysmattos", "andreysmattos", Conn::getDb());
 
 
-$cliente = new App\Classes\Client("andreysmattos", "andreysmattos", Conn::getDb());
+$htmlPage = "login.phtml";
 
 
-$cliente->validar();
-
-
+include "../App/layout.phtml";

@@ -8,6 +8,7 @@ class Client implements IClient {
 	//Atributos
 	private $login;
 	private $pass;
+	private $token;
 	private $db;
 
 
@@ -27,6 +28,13 @@ class Client implements IClient {
 
 	}
 
+
+	public function setToken($token_parametro){
+		$this->token = $token_parametro;
+		return $this;
+
+	}
+
 	
 	public function setPass($pass_parametro){
 		$this->pass = $pass_parametro;
@@ -39,6 +47,11 @@ class Client implements IClient {
 
 	}
 
+	public function getToken(){
+		return $this->token;
+
+	}
+
 	
 	public function getPass(){
 		return $this->pass;
@@ -48,11 +61,18 @@ class Client implements IClient {
 	//ESSA FUNCAO VAI SER APAGADA
 	public function gerar_hash($str){
 		//DEPOIS MUDAR PRO  PASSWORD_ARGON2I
-		echo password_hash($str, PASSWORD_DEFAULT );
+		echo password_hash($str, PASSWORD_DEFAULT);
 	}
 	
 
 	public function validar(){
+
+
+		if(!$this->endereco()){
+			return false;
+			echo "Você tentou fazer login de um formulario não oficial.";
+		}
+
 
 		if(!$this->tamanho_login()){
 			echo "Tamanho do login é invalido<br/>";
@@ -101,6 +121,34 @@ class Client implements IClient {
 			return false;
 		}		
 	}
+
+	//Verifica se o úsuario não está tentando fazer login de um formulario fake, trabalha em conjunto com o token
+	public function endereco(){
+		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != "http://localhost/Login/"){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	
+	public static function gerar_token($tamanho = 10){
+		//Não usei md5 ou outra criptografia pois queria praticar formas de gerar strings aleatorias.
+		$fim = '';
+		for ($i='a'; $i != 'aa'; $i++) { 
+			$rand = rand(1,10);
+			$alfabeto [] = (($rand % 2) == 0) ? $i : rand(0,9);
+
+		}
+
+		for($qtd = 0; $qtd <= $tamanho-1; $qtd++){
+		    $rand2 = rand(0,count($alfabeto)-1);
+		    $fim .= $alfabeto[$rand2];
+		}
+		$_SESSION['token'] = $fim;
+		return $fim;
+	}
+
 
 	
 

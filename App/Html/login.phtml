@@ -7,14 +7,12 @@ session_start();
 
 <div class="row">
 	<div class="col-md-4"> </div>
-
 	<div class="col-md-3" >
 		<form id="metade" method="post" action="../App/Script/valida.php">
 		  <div class="form-group">
 		    <label for="login">Login</label>
 		    <input value="<?php echo App\Classes\Client::gerar_token();?>" hidden name="token">
 		    <input type="text" class="form-control" id="login" name="login" placeholder="Login">
-		    
 		  </div>
 		  <div class="form-group">
 		    <label for="password">Password</label>

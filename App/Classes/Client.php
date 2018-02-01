@@ -4,6 +4,7 @@ namespace App\Classes;
 
 
 
+
 class Client implements IClient {
 	//Atributos
 	private $login;
@@ -69,8 +70,9 @@ class Client implements IClient {
 
 
 		if(!$this->endereco()){
-			return false;
 			echo "Você tentou fazer login de um formulario não oficial.";
+			return false;
+			
 		}
 
 
@@ -91,7 +93,16 @@ class Client implements IClient {
 
 		$stmt->bindValue(':login', $this->login);
 		$stmt->execute();
+
+		if(!$stmt->rowCount()){
+			echo "Login incorreto.";
+			return false;
+		}
+
 		$resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+
+
 		
 		
 		if(password_verify($this->pass, $resultado['pass'])){
@@ -100,6 +111,7 @@ class Client implements IClient {
 			return true;
 		} else {
 			//Criar session com msg de senha errada
+			echo "Senha incorreta";
 			return false;
 		}
 	}
@@ -124,7 +136,8 @@ class Client implements IClient {
 
 	//Verifica se o úsuario não está tentando fazer login de um formulario fake, trabalha em conjunto com o token
 	public function endereco(){
-		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != "http://localhost/Login/"){
+		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != "http://localhost/Login/public/"){
+			// se existir e a pagina que eu vir for diferente, ai entra aki
 			return false;
 		} else {
 			return true;

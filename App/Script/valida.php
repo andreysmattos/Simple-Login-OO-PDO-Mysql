@@ -1,7 +1,30 @@
 <?php
+require_once "../../vendor/autoload.php";
+
+use App\Classes\ReCaptcha;
+use App\Conn\Conn;
 use App\Classes\Client;
+
 session_start();
-print_r($_POST);
-echo "<br/>";
-print_r($_SESSION);
+
+
+
+
+if(!empty($_POST['login']) && !empty($_POST['password']) && $_POST['token'] == $_SESSION['token']){
+	$login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_SPECIAL_CHARS);
+	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+
+	$cliente = new Client($login, $password, Conn::getDb());
+	$cliente->validar();
+
+
+} else {
+	echo "Digite todos os dados";
+}
+
+
+
+
+
+
 

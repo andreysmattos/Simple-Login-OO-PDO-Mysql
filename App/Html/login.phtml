@@ -1,6 +1,19 @@
-
 <?php
+
+use App\Classes\Client;
+
 session_start();
+
+
+
+
+if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
+
+	echo "<h4> Você já está logado, deseja <a href='../App/Script/deslogar.php'> deslogar</a>?</h4>";
+	die();
+
+}
+
 
 ?>
 
@@ -18,9 +31,22 @@ session_start();
 		    <label for="password">Password</label>
 		    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
 		  </div>
-		
 		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
+		<br/>
+		<?php 
+		if(isset($_SESSION['msg'])){
+			$cor = (isset($_SESSION['cor'])) ? $_SESSION['cor'] : 'danger';
+			$str1 = (isset($_SESSION['str1'])) ? $_SESSION['str1'] : '';
+			Client::alert($str1, $_SESSION['msg'], $cor);
+
+			unset($_SESSION['msg']);
+			unset($_SESSION['cor']);
+			unset($_SESSION['str1']);
+		}
+
+		?>
+
 	</div>
 
 	<div class="col-md-4"> </div>

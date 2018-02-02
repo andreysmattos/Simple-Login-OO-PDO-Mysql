@@ -10,5 +10,5 @@ interface IClient {
 	public function setPass($pass_parametro);
 
 	public function validar();
-	public function deslogar();
+
 }

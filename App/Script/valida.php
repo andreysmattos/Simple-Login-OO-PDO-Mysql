@@ -15,11 +15,18 @@ if(!empty($_POST['login']) && !empty($_POST['password']) && $_POST['token'] == $
 	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
 	$cliente = new Client($login, $password, Conn::getDb());
-	$cliente->validar();
+	if($cliente->validar()){
+		echo "Logado";
+
+	} else {
+		header("LOCATION: ../../public");
+
+	}
 
 
 } else {
-	echo "Digite todos os dados";
+	$_SESSION['msg'] = "Digite todos os dados";
+	header("LOCATION: ../../public");
 }
 
 

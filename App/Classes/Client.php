@@ -70,20 +70,20 @@ class Client implements IClient {
 
 
 		if(!$this->endereco()){
-			echo "Você tentou fazer login de um formulario não oficial.";
+			$_SESSION['msg'] = "Você tentou fazer login de um formulario não oficial.";
 			return false;
 			
 		}
 
 
 		if(!$this->tamanho_login()){
-			echo "Tamanho do login é invalido<br/>";
+			$_SESSION['msg'] = "Tamanho do login é invalido.<br/>";
 			return false;
 		}
 
 
 		if(!$this->tamanho_pass()){
-			echo "Tamanho da senha é invalida<br/>";			
+			$_SESSION['msg'] = "Tamanho da senha é invalido.<br/>";			
 			return false;
 		}
 
@@ -95,7 +95,7 @@ class Client implements IClient {
 		$stmt->execute();
 
 		if(!$stmt->rowCount()){
-			echo "Login incorreto.";
+			$_SESSION['msg'] = "Login incorreto.";
 			return false;
 		}
 
@@ -107,11 +107,12 @@ class Client implements IClient {
 		
 		if(password_verify($this->pass, $resultado['pass'])){
 			//CRIAR SESSION COM ID
-			echo "<hr> LOGADO <hr>";
-			return true;
+			$_SESSION['id'] = $resultado['id'];
+			$_SESSION['nome'] = $resultado['login'];
+ 			return true;
 		} else {
-			//Criar session com msg de senha errada
-			echo "Senha incorreta";
+			
+			$_SESSION['msg'] = "Senha incorreta";
 			return false;
 		}
 	}
@@ -165,12 +166,13 @@ class Client implements IClient {
 
 	
 
-
-	
-	public function deslogar(){
-
-
+	public static function alert($str1,$str2, $msg = 'danger'){
+		echo '<div class="alert alert-'.$msg.'">';
+		echo '<strong>'.$str1 .'</strong> ';
+		echo $str2 . '</div>';
 	}
+	
+	
 
 	
 }

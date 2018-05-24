@@ -16,7 +16,7 @@ if(!empty($_POST['login']) && !empty($_POST['password']) && $_POST['token'] == $
 
 	$cliente = new Client($login, $password, Conn::getDb());
 	if($cliente->validar()){
-		echo "Logado";
+		header("LOCATION: ../Html/logado.php");
 
 	} else {
 		header("LOCATION: ../../public");

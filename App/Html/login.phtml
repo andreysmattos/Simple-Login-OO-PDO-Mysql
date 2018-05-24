@@ -8,9 +8,9 @@ session_start();
 
 
 if(isset($_SESSION['id']) && isset($_SESSION['nome'])){
-
-	echo "<h4> Você já está logado, deseja <a href='../App/Script/deslogar.php'> deslogar</a>?</h4>";
-	die();
+	header("LOCATION: ../App/Html/logado.php");
+	//echo "<h4> Você já está logado, deseja <a href='../Script/deslogar.php'> deslogar</a>?</h4>";
+	
 
 }
 

@@ -15,7 +15,6 @@ class Client implements IClient {
 
 
 	//Metodos
-
 	public function __construct($login, $pass,\PDO $db){
 		$this->setLogin($login);
 		$this->setPass($pass);
@@ -70,8 +69,8 @@ class Client implements IClient {
 
 
 		if(!$this->endereco()){
-			$_SESSION['msg'] = "Você tentou fazer login de um formulario não oficial.";
-			return false;
+			//$_SESSION['msg'] = "Você tentou fazer login de um formulario não oficial.";
+			//return false;
 			
 		}
 
